@@ -1,8 +1,15 @@
 <template>
   <div class="dashboard-container">
     <div class="flex">
+
+        <div style="text-align: center;">
+            <clock size="300px" color="#FFFFFF" bg="#4AB7BD"></clock><br>
+            <p >
+                <el-button type="primary" style="margin-top: inherit;" @click="punchClock">点击打卡</el-button>
+            </p>
+        </div>
+
         <div>
-            <!-- <el-row style="display: flex;justify-content: space-between;"> -->
             <div >
                 <el-tooltip class="item" effect="dark" content="刷新" placement="top">
                     <el-button icon="el-icon-refresh-right" circle @click="changeEvents" style="display: inline-block"></el-button>
@@ -27,7 +34,6 @@
                 </el-tooltip>
             </div>
                 
-            <!-- </el-row> -->
             <calendar
                 ref="calendar"
                 :events="calendar.events" 
@@ -41,12 +47,8 @@
                 @selectMonth="calendar.selectMonth"
                 @selectYear="calendar.selectYear">
             </calendar>
-            
-            <!-- <button @click="changeEvents">异步更新</button>
-            <button @click="calendar.value=[2018,1,Math.floor(Math.random()*30+1)]">动态设置日期</button>
-            <button @click="$refs.calendar.setToday()">返回今天</button> -->
-            
         </div>
+
     </div>
   </div>
 </template>
@@ -54,15 +56,18 @@
 <script>
 import { mapGetters } from 'vuex'
 import Calendar from '@/components/Calendar'
+import Clock from 'vue-clock2';
 
 export default {
   name: 'Dashboard',
   components: {
-        Calendar
+        Calendar,
+        Clock
     },
   data() {
     return {
       value: new Date(),
+      time: '10:40:00',
       calendar:{
                 value: [], //默认日期
                 lunar:true, //显示农历
@@ -88,15 +93,15 @@ export default {
     }
   },
   methods:{
-        closeByDialog(){
-            this.calendar4.show=false;
-        },
         changeEvents(){
             this.calendar.events={
                 '2017-7-20':'$'+(Math.random()*1000>>0),
                 '2017-7-21':'$'+(Math.random()*1000>>0),
                 '2017-7-22':'$'+(Math.random()*1000>>0),
             }
+        },
+        punchClock() {
+            
         }
     },
   computed: {
@@ -130,7 +135,7 @@ export default {
     -webkit-align-items: top;
 
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     align-items: top;
     flex-flow:row wrap
 }

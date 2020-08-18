@@ -1,4 +1,4 @@
-import { login, logout, getInfo, register } from '@/api/user'
+import { login, logout, punchClock, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -6,7 +6,8 @@ const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    username: ''
   }
 }
 
@@ -22,6 +23,9 @@ const mutations = {
   SET_NAME: (state, name) => {
     state.name = name
   },
+  SET_USERNAME: (state, username) => {
+    state.username = username
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
@@ -36,8 +40,11 @@ const actions = {
         // 解构赋值，直接提取response中的data
         const { data } = response
         
+        window.localStorage.setItem("userInfo", JSON.stringify(data.user))
+
         commit('SET_NAME', data.user.name)
-        commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        commit('SET_USERNAME', data.user.username)
+        commit('SET_AVATAR', data.user.avatar)
         commit('SET_TOKEN', response.code)
         setToken(response.code)
         resolve()
@@ -54,7 +61,10 @@ const actions = {
         // 解构赋值，直接提取response中的data
         const { data } = response
         
+        window.localStorage.setItem("userInfo", JSON.stringify(data.user))
+
         commit('SET_NAME', data.user.name)
+        commit('SET_USERNAME', data.user.username)
         commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
         commit('SET_TOKEN', response.code)
         setToken(response.code)

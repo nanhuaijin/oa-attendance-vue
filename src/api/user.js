@@ -16,6 +16,14 @@ export function register(data) {
   })
 }
 
+export function punchClock(username) {
+  return request({
+    url: '/user/punchClock',
+    method: 'get',
+    params: { username }
+  })
+}
+
 export function getInfo(token) {
   return request({
     url: '/user/info',
