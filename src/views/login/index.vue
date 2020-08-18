@@ -45,9 +45,10 @@
         <el-button :loading="loading" type="primary" style="width:30%;margin-bottom:30px;margin-left:177px;" @click.native.prevent="handleLogin">登录</el-button>
       </div>
       
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: admin</span>
+      <div class="github-address">
+          <el-link type="primary" href="https://github.com/nanhuaijin/oa-attendance-vue" target="_blank">前端GitHub地址</el-link>
+          <br>
+          <el-link type="primary" href="https://github.com/nanhuaijin/oa-attendance" target="_blank">后端GitHub地址</el-link>
       </div>
 
     </el-form>
