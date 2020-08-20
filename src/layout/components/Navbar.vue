@@ -3,9 +3,9 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
-    
+
     <div class="right-menu">
-      
+
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -30,7 +30,7 @@
       </el-dropdown>
     </div>
     <div class="right-name">
-      <span>{{ name }}</span>
+      <span>{{ username }}</span>
     </div>
   </div>
 </template>
@@ -49,17 +49,15 @@ export default {
     ...mapGetters([
       'sidebar',
       'avatar',
-      'name'
+      'username'
     ])
   },
   created() {
-
-    const name = this.$store.state.user.name
+    const username = this.$store.state.user.username
     const avatar = this.$store.state.user.avatar
-    console.log(name)
-    if (!name || !avatar) {
-      const userInfo = JSON.parse(window.localStorage.getItem("userInfo"))
-      this.$store.commit('user/SET_NAME', userInfo.name)
+    if (!username || !avatar) {
+      const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+      this.$store.commit('user/SET_NAME', userInfo.username)
       this.$store.commit('user/SET_AVATAR', userInfo.avatar)
     }
   },

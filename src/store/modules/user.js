@@ -1,4 +1,4 @@
-import { login, logout, punchClock, getInfo, register } from '@/api/user'
+import { login, logout, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -7,7 +7,8 @@ const getDefaultState = () => {
     token: getToken(),
     name: '',
     avatar: '',
-    username: ''
+    username: '',
+    account: ''
   }
 }
 
@@ -26,6 +27,9 @@ const mutations = {
   SET_USERNAME: (state, username) => {
     state.username = username
   },
+  SET_ACCOUNT: (state, account) => {
+    state.account = account
+  },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   }
@@ -34,17 +38,18 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { account, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
+      login({ account: account.trim(), password: password }).then(response => {
         // 解构赋值，直接提取response中的data
         const { data } = response
-        
-        window.localStorage.setItem("userInfo", JSON.stringify(data.user))
 
-        commit('SET_NAME', data.user.name)
-        commit('SET_USERNAME', data.user.username)
-        commit('SET_AVATAR', data.user.avatar)
+        window.localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
+
+        commit('SET_NAME', data.userInfo.name)
+        commit('SET_USERNAME', data.userInfo.username)
+        commit('SET_ACCOUNT', data.userInfo.account)
+        commit('SET_AVATAR', data.userInfo.avatar)
         commit('SET_TOKEN', response.code)
         setToken(response.code)
         resolve()
@@ -55,17 +60,18 @@ const actions = {
   },
 
   register({ commit }, userInfo) {
-    const { username, password, passwordAgain } = userInfo
+    const { account, password, passwordAgain } = userInfo
     return new Promise((resolve, reject) => {
-      register({ username: username.trim(), password: password, passwordAgain: passwordAgain }).then(response => {
+      register({ account: account.trim(), password: password, passwordAgain: passwordAgain }).then(response => {
         // 解构赋值，直接提取response中的data
         const { data } = response
-        
-        window.localStorage.setItem("userInfo", JSON.stringify(data.user))
 
-        commit('SET_NAME', data.user.name)
-        commit('SET_USERNAME', data.user.username)
-        commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        window.localStorage.setItem('userInfo', JSON.stringify(data.userInfo))
+
+        commit('SET_NAME', data.userInfo.name)
+        commit('SET_USERNAME', data.userInfo.username)
+        commit('SET_ACCOUNT', data.userInfo.account)
+        commit('SET_AVATAR', data.userInfo.avatar)
         commit('SET_TOKEN', response.code)
         setToken(response.code)
         resolve()

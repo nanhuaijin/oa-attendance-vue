@@ -6,19 +6,27 @@
         <h3 class="title">CCloud考勤管理系统注册</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="account"
+          v-model="loginForm.account"
+          placeholder="请输出账号"
+          name="account"
           type="text"
           tabindex="1"
           auto-complete="on"
+          @blur="handleCheckAccount"
         />
+        <span v-if="checkAccountFlag && mark" class="check-account">
+          <i class="el-icon-circle-check" style="color:green;" />
+        </span>
+        <span v-if="checkAccountFlag && !mark" class="check-account">
+          <i class="el-icon-circle-close" style="color:red;" />
+        </span>
+
       </el-form-item>
 
       <el-form-item prop="password">
@@ -30,7 +38,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -49,7 +57,7 @@
           ref="passwordAgain"
           v-model="loginForm.passwordAgain"
           :type="passwordTypeAgain"
-          placeholder="Please input again"
+          placeholder="请确认密码"
           name="passwordAgain"
           tabindex="3"
           auto-complete="on"
@@ -71,6 +79,8 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { checkAccountExist } from '@/api/user'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -78,6 +88,8 @@ export default {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
         callback(new Error('请输入用户名'))
+      } else if (value.length < 5 || value.length > 9) {
+        callback(new Error('用户名要大于等于5个字符，小于等于9字符'))
       } else {
         callback()
       }
@@ -100,15 +112,17 @@ export default {
     }
 
     return {
+      checkAccountFlag: false,
+      mark: false,
       loginForm: {
-        username: '',
+        account: '',
         password: '',
         passwordAgain: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        account: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        passwordAgain: [{ required: true, trigger: 'blur', validator: validatePasswordAgain }],
+        passwordAgain: [{ required: true, trigger: 'blur', validator: validatePasswordAgain }]
       },
       loading: false,
       passwordType: 'password',
@@ -128,10 +142,8 @@ export default {
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
-        
       } else {
         this.passwordType = 'password'
-        
       }
       this.$nextTick(() => {
         this.$refs.password.focus()
@@ -139,17 +151,26 @@ export default {
     },
     showPwdAgain() {
       if (this.passwordTypeAgain === 'password') {
-          this.passwordTypeAgain = ''
-      }else {
-          this.passwordTypeAgain = 'password'
+        this.passwordTypeAgain = ''
+      } else {
+        this.passwordTypeAgain = 'password'
       }
       this.$nextTick(() => {
         this.$refs.passwordAgain.focus()
       })
     },
+    handleCheckAccount() {
+      checkAccountExist(this.loginForm.account).then(response => {
+        this.checkAccountFlag = true
+        this.mark = true
+      }).catch(msg => {
+        this.checkAccountFlag = true
+        this.mark = false
+      })
+    },
     handleRegister() {
       this.$refs.loginForm.validate(valid => {
-        if (valid) {
+        if (valid && this.mark) {
           this.loading = true
           this.$store.dispatch('user/register', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
@@ -158,13 +179,16 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
-          return false
+          Message({
+            message: '必填项未通过校验',
+            type: 'error',
+            duration: 5 * 1000
+          })
         }
       })
     },
     handleBack() {
-        this.$router.push({ path:  "/login"})
+      this.$router.push({ path: '/login' })
     }
   }
 }
@@ -275,6 +299,15 @@ $light_gray:#eee;
     top: 7px;
     font-size: 16px;
     color: $dark_gray;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .check-account {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-size: 16px;
     cursor: pointer;
     user-select: none;
   }

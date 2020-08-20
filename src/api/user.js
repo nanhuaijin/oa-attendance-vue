@@ -1,10 +1,20 @@
 import request from '@/utils/request'
 
+// 登录
 export function login(data) {
   return request({
     url: '/user/login',
     method: 'post',
     data
+  })
+}
+
+// 校验用户名是否重复
+export function checkAccountExist(account) {
+  return request({
+    url: '/user/check/account',
+    method: 'get',
+    params: { account }
   })
 }
 
@@ -16,11 +26,19 @@ export function register(data) {
   })
 }
 
-export function punchClock(username) {
+export function punchClockUp(account, address) {
   return request({
-    url: '/user/punchClock',
+    url: '/user/punchClock/up',
     method: 'get',
-    params: { username }
+    params: { account, address }
+  })
+}
+
+export function punchClockLower(account, address, type) {
+  return request({
+    url: '/user/punchClock/lower',
+    method: 'get',
+    params: { account, address, type }
   })
 }
 

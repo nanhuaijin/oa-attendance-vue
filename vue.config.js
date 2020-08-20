@@ -33,6 +33,7 @@ module.exports = {
   devServer: {
     port: port,
     open: true,
+    disableHostCheck: true,
     overlay: {
       warnings: false,
       errors: true
@@ -40,13 +41,13 @@ module.exports = {
     // before: require('./mock/mock-server.js')
     proxy: {
       '/admin': {
-        target: "http://localhost:8020",
+        target: 'http://localhost:8020',
         changeOrigin: true,
         pathRewrite: {
-          '^/admin': '/admin',
-        },
-      },
-    },
+          '^/admin': '/admin'
+        }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

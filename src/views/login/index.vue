@@ -6,15 +6,15 @@
         <h3 class="title">CCloud考勤管理系统登录</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="account">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
+          ref="account"
+          v-model="loginForm.account"
+          placeholder="请输入账号"
+          name="account"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -30,7 +30,7 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
           auto-complete="on"
@@ -44,11 +44,11 @@
         <el-button :loading="loading" type="primary" style="width:30%;margin-bottom:30px;" @click.native.prevent="handleRegister">注册</el-button>
         <el-button :loading="loading" type="primary" style="width:30%;margin-bottom:30px;margin-left:177px;" @click.native.prevent="handleLogin">登录</el-button>
       </div>
-      
+
       <div class="github-address">
-          <el-link type="primary" href="https://github.com/nanhuaijin/oa-attendance-vue" target="_blank">前端GitHub地址</el-link>
-          <br>
-          <el-link type="primary" href="https://github.com/nanhuaijin/oa-attendance" target="_blank">后端GitHub地址</el-link>
+        <el-link type="primary" href="https://github.com/nanhuaijin/oa-attendance-vue" target="_blank">前端GitHub地址</el-link>
+        <br>
+        <el-link type="primary" href="https://github.com/nanhuaijin/oa-attendance" target="_blank">后端GitHub地址</el-link>
       </div>
 
     </el-form>
@@ -77,11 +77,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        account: 'admin',
         password: 'admin'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        account: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
@@ -125,7 +125,7 @@ export default {
       })
     },
     handleRegister() {
-        this.$router.push({ path:  "/register"})
+      this.$router.push({ path: '/register' })
     }
   }
 }

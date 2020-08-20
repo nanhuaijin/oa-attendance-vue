@@ -1,8 +1,8 @@
 {
-  "name": "vue-admin-template",
+  "name": "oa-attendance-vue",
   "version": "4.4.0",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "description": "CCloud考勤管理系统",
+  "author": "Breeze <breeze67@163.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
@@ -22,6 +22,7 @@
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "vue": "2.6.10",
+    "vue-baidu-map": "^0.21.22",
     "vue-clock2": "^1.1.5",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"
