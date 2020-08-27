@@ -17,7 +17,7 @@
           name="account"
           type="text"
           tabindex="1"
-          auto-complete="on"
+          auto-complete="off"
           @blur="handleCheckAccount"
         />
         <span v-if="checkAccountFlag && mark" class="check-account">
@@ -41,7 +41,7 @@
           placeholder="请输入密码"
           name="password"
           tabindex="2"
-          auto-complete="on"
+          auto-complete="off"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -60,7 +60,7 @@
           placeholder="请确认密码"
           name="passwordAgain"
           tabindex="3"
-          auto-complete="on"
+          auto-complete="off"
           @keyup.enter.native="handleRegister"
         />
         <span class="show-pwd" @click="showPwdAgain">
