@@ -60,9 +60,9 @@ const actions = {
   },
 
   register({ commit }, userInfo) {
-    const { account, password, passwordAgain } = userInfo
+    const { account, phone, code, password, passwordAgain } = userInfo
     return new Promise((resolve, reject) => {
-      register({ account: account.trim(), password: password, passwordAgain: passwordAgain }).then(response => {
+      register({ account: account.trim(), phone: phone, code: code, password: password, passwordAgain: passwordAgain }).then(response => {
         // 解构赋值，直接提取response中的data
         const { data } = response
 

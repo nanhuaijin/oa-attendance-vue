@@ -13,7 +13,7 @@
         <el-input
           ref="account"
           v-model="loginForm.account"
-          placeholder="请输入账号"
+          placeholder="请输入账号或者手机号码"
           name="account"
           type="text"
           tabindex="1"

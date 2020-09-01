@@ -29,6 +29,37 @@
 
       </el-form-item>
 
+      <el-form-item prop="phone">
+        <span class="svg-container">
+          <i class="el-icon-phone" style="font-size: large;" />
+        </span>
+        <el-input
+          ref="phone"
+          v-model="loginForm.phone"
+          placeholder="请输入手机号码"
+          name="phone"
+          type="text"
+          tabindex="2"
+          auto-complete="off"
+        />
+      </el-form-item>
+
+      <el-form-item prop="code">
+        <span class="svg-container">
+          <i class="el-icon-info" style="font-size: large;" />
+        </span>
+        <el-input
+          ref="code"
+          v-model="loginForm.code"
+          placeholder="请输入验证码"
+          name="code"
+          type="text"
+          tabindex="3"
+          auto-complete="off"
+        />
+      </el-form-item>
+      <el-button type="info" plain @click="handleSendMessage">发送验证码</el-button>
+
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password" />
@@ -40,7 +71,7 @@
           :type="passwordType"
           placeholder="请输入密码"
           name="password"
-          tabindex="2"
+          tabindex="4"
           auto-complete="off"
         />
         <span class="show-pwd" @click="showPwd">
@@ -59,7 +90,7 @@
           :type="passwordTypeAgain"
           placeholder="请确认密码"
           name="passwordAgain"
-          tabindex="3"
+          tabindex="5"
           auto-complete="off"
           @keyup.enter.native="handleRegister"
         />
@@ -79,7 +110,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
-import { checkAccountExist } from '@/api/user'
+import { checkAccountExist, sendSms } from '@/api/user'
 import { Message } from 'element-ui'
 
 export default {
@@ -94,6 +125,16 @@ export default {
         callback()
       }
     }
+
+    const validatePhone = (rule, value, callback) => {
+      const regex = /^1[0-9]{10}$/
+      if (value.length <= 0 || !regex.test(value)) {
+        callback(new Error('手机号码格式不正确'))
+      } else {
+        callback()
+      }
+    }
+
     const validatePassword = (rule, value, callback) => {
       if (value.length < 5) {
         callback(new Error('密码长度要大于5个字符'))
@@ -102,9 +143,7 @@ export default {
       }
     }
     const validatePasswordAgain = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码长度要大于5个字符'))
-      } else if (value.length > 4 && value !== this.loginForm.password) {
+      if (value.length <= 0 || value !== this.loginForm.password) {
         callback(new Error('密码不一致'))
       } else {
         callback()
@@ -116,11 +155,15 @@ export default {
       mark: false,
       loginForm: {
         account: '',
+        phone: '',
+        code: '',
         password: '',
         passwordAgain: ''
       },
       loginRules: {
         account: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
+        code: [{ required: true, trigger: 'blur', message: '请输入验证码' }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }],
         passwordAgain: [{ required: true, trigger: 'blur', validator: validatePasswordAgain }]
       },
@@ -159,6 +202,7 @@ export default {
         this.$refs.passwordAgain.focus()
       })
     },
+    // 校验账号是否可用
     handleCheckAccount() {
       checkAccountExist(this.loginForm.account).then(response => {
         this.checkAccountFlag = true
@@ -168,6 +212,17 @@ export default {
         this.mark = false
       })
     },
+    // 发送验证码
+    handleSendMessage() {
+      sendSms(this.loginForm.phone).then(response => {
+        Message({
+          message: '验证码发送成功',
+          type: 'success',
+          duration: 2 * 1000
+        })
+      })
+    },
+    // 注册
     handleRegister() {
       this.$refs.loginForm.validate(valid => {
         if (valid && this.mark) {

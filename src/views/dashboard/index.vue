@@ -107,7 +107,7 @@
 import { mapGetters } from 'vuex'
 import Calendar from '@/components/Calendar'
 import Clock from 'vue-clock2'
-import { punchClockUp, punchClockLower, listCalendarData, getCalendarDataByDay } from '@/api/user'
+import { punchClockUp, punchClockLower, listCalendarData, getCalendarDataByDay } from '@/api/attendance'
 import { Message } from 'element-ui'
 
 export default {
