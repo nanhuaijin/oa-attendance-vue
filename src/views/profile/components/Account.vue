@@ -1,69 +1,58 @@
 <template>
-  <!-- <el-form>
-    <el-form-item label="昵称">
-      <el-input v-model.trim="user.username" />
-    </el-form-item>
-    <el-form-item label="邮箱">
-      <el-input v-model.trim="user.email" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submit">更新</el-button>
-    </el-form-item>
-  </el-form> -->
-
-  <el-form ref="userForm" :model="userForm" :rules="updateRules" auto-complete="off" label-width="80px">
-    <el-form-item label="真实姓名" prop="name">
-      <el-input
-        ref="name"
-        v-model="userForm.name"
-        name="name"
-        type="text"
-        tabindex="1"
-      />
-    </el-form-item>
-    <el-form-item label="昵称" prop="username">
-      <el-input
-        ref="username"
-        v-model="userForm.username"
-        name="username"
-        type="text"
-        tabindex="2"
-      />
-    </el-form-item>
-    <el-form-item label="邮箱" prop="email">
-      <el-input
-        ref="email"
-        v-model="userForm.email"
-        name="email"
-        type="text"
-        tabindex="3"
-      />
-    </el-form-item>
-    <el-form-item label="生日" prop="birthday">
-      <el-date-picker
-        ref="birthday"
-        v-model="userForm.birthday"
-        name="birthday"
-        type="date"
-        placeholder="选择日期"
-        tabindex="4"
-      />
-    </el-form-item>
-    <el-form-item label="性别" prop="sex">
-      <el-radio-group
-        ref="sex"
-        v-model="userForm.sex"
-        tabindex="5"
-      >
-        <el-radio label="男" />
-        <el-radio label="女" />
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" :loading="loading" @click="handleSubmit">更新</el-button>
-    </el-form-item>
-  </el-form>
-
+  <div style="width: 50%;">
+    <el-form ref="userForm" :model="userForm" :rules="updateRules" auto-complete="off" label-width="80px">
+      <el-form-item label="真实姓名" prop="name">
+        <el-input
+          ref="name"
+          v-model="userForm.name"
+          name="name"
+          type="text"
+          tabindex="1"
+        />
+      </el-form-item>
+      <el-form-item label="昵称" prop="username">
+        <el-input
+          ref="username"
+          v-model="userForm.username"
+          name="username"
+          type="text"
+          tabindex="2"
+        />
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email">
+        <el-input
+          ref="email"
+          v-model="userForm.email"
+          name="email"
+          type="text"
+          tabindex="3"
+        />
+      </el-form-item>
+      <el-form-item label="生日" prop="birthday">
+        <el-date-picker
+          ref="birthday"
+          v-model="userForm.birthday"
+          name="birthday"
+          type="date"
+          placeholder="选择日期"
+          tabindex="4"
+        />
+      </el-form-item>
+      <el-form-item label="性别" prop="sex">
+        <el-radio-group
+          ref="sex"
+          v-model="userForm.sex"
+          tabindex="5"
+        >
+          <el-radio label="男" />
+          <el-radio label="女" />
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" :loading="loading" @click="handleSubmit">更新</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -162,7 +151,6 @@ export default {
           const birthday = year + monthStr + dayStr
 
           this.userForm.birthday = birthday
-          console.log(this.userForm)
           updateUserByAccount(this.userForm).then(response => {
             Message({
               message: '更新用户信息成功',

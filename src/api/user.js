@@ -47,7 +47,16 @@ export function getInfo(account) {
 // 更新用户信息
 export function updateUserByAccount(data) {
   return request({
-    url: '/user/update',
+    url: '/user/update/user',
+    method: 'post',
+    data
+  })
+}
+
+// 更新密码
+export function updatePasswordByAccount(data) {
+  return request({
+    url: '/user/update/password',
     method: 'post',
     data
   })
