@@ -10,11 +10,11 @@ export function login(data) {
 }
 
 // 发送手机验证码
-export function sendSms(phone) {
+export function sendSms(phone, type) {
   return request({
     url: '/user/sms',
     method: 'get',
-    params: { phone }
+    params: { phone, type }
   })
 }
 
@@ -57,6 +57,24 @@ export function updateUserByAccount(data) {
 export function updatePasswordByAccount(data) {
   return request({
     url: '/user/update/password',
+    method: 'post',
+    data
+  })
+}
+
+// 更换手机号码
+export function updatePhoneByAccount(data) {
+  return request({
+    url: '/user/update/phone',
+    method: 'post',
+    data
+  })
+}
+
+// 绑定手机号码
+export function bingingPhoneByAccount(data) {
+  return request({
+    url: '/user/save/phone',
     method: 'post',
     data
   })

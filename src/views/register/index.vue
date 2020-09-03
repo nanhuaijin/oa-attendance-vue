@@ -214,7 +214,8 @@ export default {
     },
     // 发送验证码
     handleSendMessage() {
-      sendSms(this.loginForm.phone).then(response => {
+      const type = 0
+      sendSms(this.loginForm.phone, type).then(response => {
         Message({
           message: '验证码发送成功',
           type: 'success',

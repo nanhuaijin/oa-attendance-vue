@@ -22,6 +22,9 @@
               <el-tab-pane label="修改密码" name="password">
                 <password />
               </el-tab-pane>
+              <el-tab-pane label="变更手机" name="phone">
+                <phone />
+              </el-tab-pane>
             </el-tabs>
           </el-card>
         </el-col>
@@ -38,10 +41,11 @@ import Activity from './components/Activity'
 import Timeline from './components/Timeline'
 import Account from './components/Account'
 import Password from './components/Password'
+import Phone from './components/Phone'
 
 export default {
   name: 'Profile',
-  components: { UserCard, Activity, Timeline, Account, Password },
+  components: { UserCard, Activity, Timeline, Account, Password, Phone },
   data() {
     return {
       user: {},
