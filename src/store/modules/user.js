@@ -8,7 +8,9 @@ const getDefaultState = () => {
     name: '',
     avatar: '',
     username: '',
-    account: ''
+    account: '',
+    email: '',
+    role: ''
   }
 }
 
@@ -32,6 +34,12 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_EMAIL: (state, email) => {
+    state.email = email
+  },
+  SET_ROLE: (state, role) => {
+    state.role = role
   }
 }
 

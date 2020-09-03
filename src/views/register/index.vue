@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+    <el-form ref="loginForm" :model="loginForm" :rules="registerRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
         <h3 class="title">CCloud考勤管理系统注册</h3>
@@ -119,8 +119,8 @@ export default {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
         callback(new Error('请输入用户名'))
-      } else if (value.length < 5 || value.length > 9) {
-        callback(new Error('用户名要大于等于5个字符，小于等于9字符'))
+      } else if (value.length < 5 || value.length > 15) {
+        callback(new Error('用户名要大于等于5个字符，小于等于15字符'))
       } else {
         callback()
       }
@@ -160,7 +160,7 @@ export default {
         password: '',
         passwordAgain: ''
       },
-      loginRules: {
+      registerRules: {
         account: [{ required: true, trigger: 'blur', validator: validateUsername }],
         phone: [{ required: true, trigger: 'blur', validator: validatePhone }],
         code: [{ required: true, trigger: 'blur', message: '请输入验证码' }],

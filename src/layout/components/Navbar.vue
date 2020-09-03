@@ -12,9 +12,9 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
+          <router-link to="/profile">
             <el-dropdown-item>
-              我的主页
+              个人中心
             </el-dropdown-item>
           </router-link>
           <!-- <a target="_blank" href="https://github.com/PanJiaChen/vue-admin-template/">
@@ -57,7 +57,7 @@ export default {
     const avatar = this.$store.state.user.avatar
     if (!username || !avatar) {
       const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
-      this.$store.commit('user/SET_NAME', userInfo.username)
+      this.$store.commit('user/SET_USERNAME', userInfo.username)
       this.$store.commit('user/SET_AVATAR', userInfo.avatar)
     }
   },

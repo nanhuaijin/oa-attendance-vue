@@ -35,12 +35,21 @@ export function register(data) {
     data
   })
 }
-
-export function getInfo(token) {
+// 获取用户信息
+export function getInfo(account) {
   return request({
     url: '/user/info',
     method: 'get',
-    params: { token }
+    params: { account }
+  })
+}
+
+// 更新用户信息
+export function updateUserByAccount(data) {
+  return request({
+    url: '/user/update',
+    method: 'post',
+    data
   })
 }
 
