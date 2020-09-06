@@ -35,3 +35,12 @@ export function punchClockLower(account, address, type) {
     params: { account, address, type }
   })
 }
+
+// 获取打卡百分率
+export function getPercentages(account) {
+  return request({
+    url: '/attendance/get/percentages',
+    method: 'get',
+    params: { account }
+  })
+}

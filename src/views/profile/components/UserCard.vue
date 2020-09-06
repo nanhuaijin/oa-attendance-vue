@@ -19,32 +19,32 @@
 
     <div class="user-bio">
       <div class="user-education user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>教育</span></div>
+        <div class="user-bio-section-header"><svg-icon icon-class="education" /><span>签名</span></div>
         <div class="user-bio-section-body">
           <div class="text-muted">
-            JS in Computer Science from the University of Technology
+            世间情动，不过盛夏白瓷梅子汤
           </div>
         </div>
       </div>
 
       <div class="user-skills user-bio-section">
-        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>技能</span></div>
+        <div class="user-bio-section-header"><svg-icon icon-class="skill" /><span>出勤率</span></div>
         <div class="user-bio-section-body">
           <div class="progress-item">
-            <span>Vue</span>
-            <el-progress :percentage="70" />
+            <span>本周</span>
+            <el-progress :percentage="percentages.currWeekPer" :color="currWeek" />
           </div>
           <div class="progress-item">
-            <span>JavaScript</span>
-            <el-progress :percentage="18" />
+            <span>上周</span>
+            <el-progress :percentage="percentages.preWeekPer" :color="preWeek" />
           </div>
           <div class="progress-item">
-            <span>Css</span>
-            <el-progress :percentage="12" />
+            <span>本月</span>
+            <el-progress :percentage="percentages.currMonthPer" :color="currMonth" />
           </div>
           <div class="progress-item">
-            <span>ESLint</span>
-            <el-progress :percentage="100" status="success" />
+            <span>本年</span>
+            <el-progress :percentage="percentages.currYearPer" :color="currYear" />
           </div>
         </div>
       </div>
@@ -54,6 +54,7 @@
 
 <script>
 import PanThumb from '@/components/PanThumb'
+import { getPercentages } from '@/api/attendance'
 
 export default {
   components: { PanThumb },
@@ -68,6 +69,33 @@ export default {
           role: ''
         }
       }
+    }
+  },
+  data() {
+    return {
+      percentages: {
+        currWeekPer: 10,
+        preWeekPer: 20,
+        currMonthPer: 30,
+        currYearPer: 40
+      },
+      currWeek: '#87CEEB',
+      preWeek: '#FFA500',
+      currMonth: '#FFA07A',
+      currYear: '#9370DB'
+    }
+  },
+  created() {
+    this.getPercentage()
+  },
+  methods: {
+    getPercentage() {
+      const userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+
+      getPercentages(userInfo.account).then(response => {
+        const { data } = response
+        this.percentages = data.percentages
+      })
     }
   }
 }

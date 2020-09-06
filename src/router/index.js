@@ -64,7 +64,6 @@ export const constantRoutes = [
     path: '/profile',
     component: Layout,
     redirect: '/profile/index',
-    hidden: true,
     children: [
       {
         path: 'index',
